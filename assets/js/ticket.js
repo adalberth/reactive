@@ -31,4 +31,4 @@ function Ticket(_data){
 	return self;
 }
 
-export default Ticket;
+module.exports = Ticket;

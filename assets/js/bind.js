@@ -22,4 +22,4 @@ function Bind(_obj, _val) {
     return self;
 }
 
-export default Bind;
+module.exports = Bind;

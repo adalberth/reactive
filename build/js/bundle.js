@@ -1,10 +1,6 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
 var _stupidEvent = require('stupid-event');
 
 var _stupidEvent2 = _interopRequireDefault(_stupidEvent);
@@ -35,9 +31,9 @@ function Bind(_obj, _val) {
     return self;
 }
 
-exports.default = Bind;
+module.exports = Bind;
 
-},{"stupid-event":8}],2:[function(require,module,exports){
+},{"stupid-event":9}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -171,6 +167,10 @@ var _template = require('template');
 
 var _template2 = _interopRequireDefault(_template);
 
+var _reactive = require('reactive');
+
+var _reactive2 = _interopRequireDefault(_reactive);
+
 function _interopRequireDefault(obj) {
 	return obj && obj.__esModule ? obj : { default: obj };
 }
@@ -184,17 +184,55 @@ var obj = {
 	b: "test",
 	a: "test2"
 };
-var string = 'This is {{a}} with something {{b}}';
+var reactive = (0, _reactive2.default)(obj, 'This is {{a}} with something {{b}}');
+console.log(reactive.get());
+window.obj = obj;
 
-var template = (0, _template2.default)(obj, string);
-console.log(template.render());
-
-},{"data":2,"template":6,"ticket":7}],5:[function(require,module,exports){
+},{"data":2,"reactive":5,"template":7,"ticket":8}],5:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
+var _template = require('template');
+
+var _template2 = _interopRequireDefault(_template);
+
+var _bind = require('bind');
+
+var _bind2 = _interopRequireDefault(_bind);
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
+
+function Reactive(_obj, _string) {
+  var self = {};
+  var template = (0, _template2.default)(_obj, _string);
+  var bindings = [];
+  for (var key in _obj) {
+    var bind = (0, _bind2.default)(_obj, key);
+    bind.on('changed', update);
+    bindings.push(bind);
+  }
+
+  function update() {
+    console.log(template.render());
+  }
+
+  function get() {
+    return template.render();
+  }
+
+  /*
+  * Public
+  */
+  self.get = get;
+
+  return self;
+}
+
+module.exports = Reactive;
+
+},{"bind":1,"template":7}],6:[function(require,module,exports){
+'use strict';
 
 var _field = require('field');
 
@@ -255,14 +293,11 @@ function Row(_data) {
 	return self;
 }
 
-exports.default = Row;
+module.exports = Row;
 
-},{"field":3}],6:[function(require,module,exports){
+},{"field":3}],7:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
 function Template(_obj, _string) {
 	var self = {};
 	var regexCurly = /{{\w\d*}}/g;
@@ -275,7 +310,7 @@ function Template(_obj, _string) {
 	function render() {
 		var str = '';
 		for (var i = 0; i < splitted.length; i++) {
-			str += splitted[i] + (match[i] ? _obj[match[i]] : '');
+			str += splitted[i] + (match[i] && _obj[match[i]] ? _obj[match[i]] : '');
 		}
 		return str;
 	}
@@ -288,14 +323,10 @@ function Template(_obj, _string) {
 	return self;
 }
 
-exports.default = Template;
+module.exports = Template;
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
 
 var _row = require('row');
 
@@ -356,9 +387,9 @@ function Ticket(_data) {
 	return self;
 }
 
-exports.default = Ticket;
+module.exports = Ticket;
 
-},{"row":5}],8:[function(require,module,exports){
+},{"row":6}],9:[function(require,module,exports){
 /**
  * @fileoverview Simple event system.
  * @author david@stupid-studio.com (David Adalberth Andersen)

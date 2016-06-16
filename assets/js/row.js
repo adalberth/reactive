@@ -31,4 +31,4 @@ function Row(_data){
 	return self;
 }
 
-export default Row;
+module.exports = Row;

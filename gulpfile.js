@@ -46,7 +46,8 @@ var bundler = watchify(browserify({
  * --------------------------------------------------
  */
 gulp.task('js', function(){
-	git.branch(function (branch) {
+	gulp.start('jsDev');
+	/*git.branch(function (branch) {
 		switch (branch){
 			case 'master':
 				gulp.start('jsMaster');
@@ -54,7 +55,7 @@ gulp.task('js', function(){
 			default:
 				gulp.start('jsDev');
 		}
-	});
+	});*/
 });
 
 gulp.task('jsDev', function(){

@@ -8,7 +8,7 @@ function Template(_obj, _string){
 	function render(){
 		var str = '';
 		for (var i = 0; i < splitted.length; i++) {
-			str += splitted[i] + (match[i] ? _obj[match[i]] : '');
+			str += splitted[i] + (match[i] && _obj[match[i]] ? _obj[match[i]] : '');
 		}
 		return str;
 	}
@@ -21,4 +21,4 @@ function Template(_obj, _string){
 	return self;
 }
 
-export default Template;
+module.exports = Template;
