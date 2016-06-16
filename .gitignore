@@ -1,0 +1,14 @@
+.sass-cache/
+node_modules/
+bower_components/
+*.DS_Store
+*.sublime-workspace
+vendor/
+composer.lock
+includes/components/*
+static/acf/*
+static/css/*
+static/images/*
+static/js/*
+static/lang/*
+static/acf/*

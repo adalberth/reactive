@@ -1,0 +1,22 @@
+/*
+ * Em / Rem
+ * --------------------------------------------------
+ */
+@function em($i, $base-size: $font-base-size){
+	@return ($i / $base-size) * 1em;
+}
+
+@function rem($i, $base-size: $font-base-size){
+	@return ($i / $base-size) * 1rem;
+}
+
+/*
+ * Image
+ * --------------------------------------------------
+ */
+@function imageUrl($image){
+	@return url('#{$http_path}#{$images_dir}/#{$image}');
+}
+@function inlineImage($image){
+	@return url('#{$images_dir}/#{$image}');
+}

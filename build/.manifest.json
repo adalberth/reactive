@@ -1,0 +1,21 @@
+{
+    "providers": [
+        "Stupid\\Support\\Config\\ConfigServiceProvider",
+        "Stupid\\Support\\Session\\SessionServiceProvider",
+        "Stupid\\Support\\Translation\\TranslationServiceProvider",
+        "Stupid\\Support\\Validation\\ValidationServiceProvider",
+        "Stupid\\Database\\DatabaseServiceProvider",
+        "Stupid\\Support\\Facade\\FacadeServiceProvider",
+        "App\\Test\\TestServiceProvider"
+    ],
+    "eager": [
+        "Stupid\\Support\\Config\\ConfigServiceProvider",
+        "Stupid\\Support\\Session\\SessionServiceProvider",
+        "Stupid\\Support\\Translation\\TranslationServiceProvider",
+        "Stupid\\Support\\Validation\\ValidationServiceProvider",
+        "Stupid\\Database\\DatabaseServiceProvider",
+        "Stupid\\Support\\Facade\\FacadeServiceProvider",
+        "App\\Test\\TestServiceProvider"
+    ],
+    "deferred": []
+}
