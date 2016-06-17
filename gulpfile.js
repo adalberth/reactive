@@ -38,8 +38,15 @@ var settings = {
 var bundler = watchify(browserify({
         entries: [settings.source + '/js/index.js'],
         paths: ['./node_modules', settings.source + '/js/', settings.components + '/']
+    }).transform(babelify)
+);
+/*
+var bundler = browserify({
+        entries: [settings.source + '/js/index.js'],
+        paths: ['./node_modules', settings.source + '/js/', settings.components + '/']
     }
-));
+);
+*/
 
 /*
  * JS
@@ -64,7 +71,6 @@ gulp.task('jsDev', function(){
 		appliesTo: { includeExtensions: ['.html', '.svg'] },
 		minify: true
      })*/
-	.transform(babelify)
 	.bundle()
 	.on('error', function(err){ console.log(err.message); this.emit('end');})
 	.pipe(source('bundle.js'))

@@ -5,9 +5,7 @@ var _stupidEvent = require('stupid-event');
 
 var _stupidEvent2 = _interopRequireDefault(_stupidEvent);
 
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : { default: obj };
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function Bind(_obj, _val) {
     var self = {};
@@ -33,162 +31,50 @@ function Bind(_obj, _val) {
 
 module.exports = Bind;
 
-},{"stupid-event":9}],2:[function(require,module,exports){
+},{"stupid-event":6}],2:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.default = [{
-    type: 'tickets',
-    filled: false,
-    rows: [{
-        type: 'row',
-        filled: false,
-        fields: [{
-            type: 'field',
-            filled: false,
-            value: 1
-        }, {
-            type: 'field',
-            filled: false,
-            value: 2
-        }, {
-            type: 'field',
-            filled: false,
-            value: 2
-        }]
-    }, {
-        type: 'row',
-        filled: false,
-        fields: [{
-            type: 'field',
-            filled: false,
-            value: 4
-        }, {
-            type: 'field',
-            filled: false,
-            value: 5
-        }, {
-            type: 'field',
-            filled: false,
-            value: 6
-        }]
-    }]
-}];
+var _rstring = require('rstring');
 
-},{}],3:[function(require,module,exports){
-'use strict';
+var _rstring2 = _interopRequireDefault(_rstring);
 
-var _bind = require('bind');
+var _rdom = require('rdom');
 
-var _bind2 = _interopRequireDefault(_bind);
+var _rdom2 = _interopRequireDefault(_rdom);
 
-function _interopRequireDefault(obj) {
-	return obj && obj.__esModule ? obj : { default: obj };
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function Field(_data, _parent) {
-	var self = {};
-	var opts = opts || {};
-	var valueBinded = (0, _bind2.default)(_data, 'value');
-	var filledBinded = (0, _bind2.default)(_data, 'filled');
-	var fieldHTML = document.createElement('div');
+// window.data = data;
+// document.addEventListener("DOMContentLoaded", function(_event) {
+// 	var ticket = Ticket(data[0]);
+// });
 
-	/*
- * Private
- */
-
-	function init() {
-		setupHTML();
-		setupEvents();
-		render();
-	}
-
-	function setupHTML() {
-		fieldHTML.classList.add('field');
-		document.body.appendChild(fieldHTML);
-	}
-
-	function setupEvents() {
-		valueBinded.on('changed', function () {
-			updateHTML();
-		});
-		filledBinded.on('changed', function () {
-			updateStatus();
-		});
-	}
-
-	function render() {
-		updateHTML();
-		updateStatus();
-	}
-
-	function updateHTML() {
-		fieldHTML.innerHTML = _data.value;
-	}
-
-	function updateStatus() {
-		if (_data.filled) {
-			fieldHTML.classList.add('filled');
-		} else {
-			fieldHTML.classList.remove('filled');
-		}
-	}
-
-	/*
- * Public
- */
-	self.render = render;
-
-	/*
- * Init
- */
-
-	init();
-
-	return self;
-}
-
-module.exports = Field;
-
-},{"bind":1}],4:[function(require,module,exports){
-'use strict';
-
-var _data = require('data');
-
-var _data2 = _interopRequireDefault(_data);
-
-var _ticket = require('ticket');
-
-var _ticket2 = _interopRequireDefault(_ticket);
-
-var _template = require('template');
-
-var _template2 = _interopRequireDefault(_template);
-
-var _reactive = require('reactive');
-
-var _reactive2 = _interopRequireDefault(_reactive);
-
-function _interopRequireDefault(obj) {
-	return obj && obj.__esModule ? obj : { default: obj };
-}
-
-window.data = _data2.default;
-document.addEventListener("DOMContentLoaded", function (_event) {
-	var ticket = (0, _ticket2.default)(_data2.default[0]);
-});
-
+// import data from 'data';
+// import Ticket from 'ticket';
+// import Template from 'template';
 var obj = {
-	b: "test",
-	a: "test2"
+	a: 'World!',
+	b: 'Sky',
+	class: 'some-class',
+	bgc: 'red',
+	bdr: '1px solid blue'
 };
-var reactive = (0, _reactive2.default)(obj, 'This is {{a}} with something {{b}}');
-console.log(reactive.get());
+
+var rdom = (0, _rdom2.default)(obj, '\n<div class="{{class}}" style="background-color:{{bgc}}; border: {{bdr}}">\n\t<span>Hello {{a}}, goodbye {{b}}</span>\n</div>\n');
+
+document.addEventListener("DOMContentLoaded", function (_event) {
+	document.body.appendChild(rdom.getHTML());
+});
 window.obj = obj;
 
-},{"data":2,"reactive":5,"template":7,"ticket":8}],5:[function(require,module,exports){
+/*
+<div class="{{a}} {{a1}} class2" style="background-color:{{b}}">
+	Hello {{a2}} Goodbye {{a3}}
+	<span>{{c}}</span>
+</div>
+ */
+
+},{"rdom":3,"rstring":4}],3:[function(require,module,exports){
 'use strict';
 
 var _template = require('template');
@@ -199,70 +85,36 @@ var _bind = require('bind');
 
 var _bind2 = _interopRequireDefault(_bind);
 
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
+var _rstring = require('rstring');
 
-function Reactive(_obj, _string) {
-  var self = {};
-  var template = (0, _template2.default)(_obj, _string);
-  var bindings = [];
-  for (var key in _obj) {
-    var bind = (0, _bind2.default)(_obj, key);
-    bind.on('changed', update);
-    bindings.push(bind);
-  }
+var _rstring2 = _interopRequireDefault(_rstring);
 
-  function update() {
-    console.log(template.render());
-  }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-  function get() {
-    return template.render();
-  }
-
-  /*
-  * Public
-  */
-  self.get = get;
-
-  return self;
-}
-
-module.exports = Reactive;
-
-},{"bind":1,"template":7}],6:[function(require,module,exports){
-'use strict';
-
-var _field = require('field');
-
-var _field2 = _interopRequireDefault(_field);
-
-function _interopRequireDefault(obj) {
-	return obj && obj.__esModule ? obj : { default: obj };
-}
-
-function Row(_data) {
+function ReactiveDom(_obj, _stringElement) {
 	var self = {};
-	var opts = opts || {};
-	var collection = [];
+	var dom = createDOM(_stringElement);
+	var rDomAttrCollection = [];
+	var rTextNodeCollectio = [];
 
-	/*
- * Private
- */
+	recur(dom);
 
-	function init() {
-		var fields = _data['fields'];
+	function recur(_dom) {
+		if (_dom.attributes.length != 0) createReactiveAttrDom(_dom);
+		var children = _dom.childNodes;
 		var _iteratorNormalCompletion = true;
 		var _didIteratorError = false;
 		var _iteratorError = undefined;
 
 		try {
-			for (var _iterator = fields[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-				var item = _step.value;
+			for (var _iterator = children[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+				var child = _step.value;
 
-				var field = (0, _field2.default)(item, self);
-				collection.push(field);
+				if (child.nodeType === 3) {
+					var rTextNode = ReactiveTextNode(_obj, child);
+				} else if (child.nodeType === 1) {
+					recur(child);
+				}
 			}
 		} catch (err) {
 			_didIteratorError = true;
@@ -280,30 +132,185 @@ function Row(_data) {
 		}
 	}
 
+	function createReactiveAttrDom(_dom) {
+		var attributes = _dom.attributes;
+		for (var i = 0; i < _dom.attributes.length; i++) {
+			var rDomAttr = ReactiveDomAttr(_obj, _dom.attributes[i], _dom);
+			rDomAttrCollection.push(rDomAttr);
+		}
+	}
+
+	function createDOM() {
+		var divHTML = document.createElement('div');
+		divHTML.innerHTML = _stringElement;
+		return divHTML.children[0];
+	}
+
+	function getHTML() {
+		return dom;
+	}
+
 	/*
  * Public
  */
-
-	/*
- * Init
- */
-
-	init();
+	self.getHTML = getHTML;
 
 	return self;
 }
 
-module.exports = Row;
+function ReactiveTextNode(_obj, _text) {
+	var self = {};
+	var template = (0, _template2.default)(_obj, _text.textContent);
+	var keys = template.getKeys();
 
-},{"field":3}],7:[function(require,module,exports){
+	if (keys) {
+		var _iteratorNormalCompletion2 = true;
+		var _didIteratorError2 = false;
+		var _iteratorError2 = undefined;
+
+		try {
+			for (var _iterator2 = keys[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+				var key = _step2.value;
+
+				createBinding(key);
+			}
+		} catch (err) {
+			_didIteratorError2 = true;
+			_iteratorError2 = err;
+		} finally {
+			try {
+				if (!_iteratorNormalCompletion2 && _iterator2.return) {
+					_iterator2.return();
+				}
+			} finally {
+				if (_didIteratorError2) {
+					throw _iteratorError2;
+				}
+			}
+		}
+
+		updateDom();
+	}
+
+	function createBinding(_key) {
+		var bind = (0, _bind2.default)(_obj, _key);
+		bind.on('changed', function () {
+			updateDom();
+		});
+	}
+
+	function updateDom() {
+		_text.textContent = template.render();
+	}
+
+	return self;
+}
+
+function ReactiveDomAttr(_obj, _item, _dom) {
+	var self = {};
+	var name = _item.name;
+	var template = (0, _template2.default)(_obj, _item.value);
+	var keys = template.getKeys();
+	var _iteratorNormalCompletion3 = true;
+	var _didIteratorError3 = false;
+	var _iteratorError3 = undefined;
+
+	try {
+		for (var _iterator3 = keys[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+			var key = _step3.value;
+
+			createBinding(key);
+		}
+	} catch (err) {
+		_didIteratorError3 = true;
+		_iteratorError3 = err;
+	} finally {
+		try {
+			if (!_iteratorNormalCompletion3 && _iterator3.return) {
+				_iterator3.return();
+			}
+		} finally {
+			if (_didIteratorError3) {
+				throw _iteratorError3;
+			}
+		}
+	}
+
+	updateDom();
+
+	function createBinding(_key) {
+		var bind = (0, _bind2.default)(_obj, _key);
+		bind.on('changed', function () {
+			updateDom();
+		});
+	}
+
+	function updateDom() {
+		_dom.setAttribute(name, template.render());
+	}
+
+	return self;
+}
+
+module.exports = ReactiveDom;
+
+},{"bind":1,"rstring":4,"template":5}],4:[function(require,module,exports){
+'use strict';
+
+var _template = require('template');
+
+var _template2 = _interopRequireDefault(_template);
+
+var _bind = require('bind');
+
+var _bind2 = _interopRequireDefault(_bind);
+
+var _stupidEvent = require('stupid-event');
+
+var _stupidEvent2 = _interopRequireDefault(_stupidEvent);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function ReactiveString(_obj, _string) {
+  var self = {};
+  var event = (0, _stupidEvent2.default)();
+  var template = (0, _template2.default)(_obj, _string);
+  var bindings = [];
+  for (var key in _obj) {
+    var bind = (0, _bind2.default)(_obj, key);
+    bind.on('changed', update);
+    bindings.push(bind);
+  }
+
+  function update() {
+    event.trigger('changed', template.render());
+  }
+
+  function tmpl() {
+    return template.render();
+  }
+
+  /*
+  * Public
+  */
+  self.tmpl = tmpl;
+  self.on = event.on;
+
+  return self;
+}
+
+module.exports = ReactiveString;
+
+},{"bind":1,"stupid-event":6,"template":5}],5:[function(require,module,exports){
 'use strict';
 
 function Template(_obj, _string) {
 	var self = {};
-	var regexCurly = /{{\w\d*}}/g;
-	var regexObj = /\w\d*/g;
+	var regexCurly = /{{[^}}]+?}}/g;
+	var regexObj = /[\w\d_]+/g;
 	var splitted = _string.split(regexCurly);
-	var match = _string.match(regexCurly).map(function (v) {
+	var match = _string.match(regexCurly);
+	if (match != null) match = match.map(function (v) {
 		return v.match(regexObj)[0];
 	});
 
@@ -315,81 +322,22 @@ function Template(_obj, _string) {
 		return str;
 	}
 
+	function getKeys() {
+		return match;
+	}
+
 	/*
  * Public
  */
 	self.render = render;
+	self.getKeys = getKeys;
 
 	return self;
 }
 
 module.exports = Template;
 
-},{}],8:[function(require,module,exports){
-'use strict';
-
-var _row = require('row');
-
-var _row2 = _interopRequireDefault(_row);
-
-function _interopRequireDefault(obj) {
-	return obj && obj.__esModule ? obj : { default: obj };
-}
-
-function Ticket(_data) {
-	var self = {};
-	var opts = opts || {};
-	var collection = [];
-
-	/*
- * Private
- */
-
-	function init() {
-		var rows = _data['rows'];
-		var _iteratorNormalCompletion = true;
-		var _didIteratorError = false;
-		var _iteratorError = undefined;
-
-		try {
-			for (var _iterator = rows[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-				var item = _step.value;
-
-				var row = (0, _row2.default)(item);
-				collection.push(row);
-			}
-		} catch (err) {
-			_didIteratorError = true;
-			_iteratorError = err;
-		} finally {
-			try {
-				if (!_iteratorNormalCompletion && _iterator.return) {
-					_iterator.return();
-				}
-			} finally {
-				if (_didIteratorError) {
-					throw _iteratorError;
-				}
-			}
-		}
-	}
-
-	/*
- * Public
- */
-
-	/*
- * Init
- */
-
-	init();
-
-	return self;
-}
-
-module.exports = Ticket;
-
-},{"row":6}],9:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 /**
  * @fileoverview Simple event system.
  * @author david@stupid-studio.com (David Adalberth Andersen)
@@ -545,4 +493,4 @@ function Event(opts){
 
 /** @export */
 module.exports = Event;
-},{}]},{},[4]);
+},{}]},{},[2]);

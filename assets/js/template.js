@@ -1,9 +1,10 @@
 function Template(_obj, _string){
  	var self = {};
-	var regexCurly = /{{\w\d*}}/g;
-	var regexObj = /\w\d*/g;
+	var regexCurly = /{{[^}}]+?}}/g;
+	var regexObj = /[\w\d_]+/g;
 	var splitted = _string.split(regexCurly);
-	var match = _string.match(regexCurly).map((v) => v.match(regexObj)[0]);
+	var match = _string.match(regexCurly);
+	if(match != null) match = match.map((v) => v.match(regexObj)[0]); 
 
 	function render(){
 		var str = '';
@@ -13,10 +14,15 @@ function Template(_obj, _string){
 		return str;
 	}
 
+	function getKeys(){
+		return match;
+	}
+
 	/*
 	* Public
 	*/
 	self.render = render;
+	self.getKeys = getKeys;
 
 	return self;
 }

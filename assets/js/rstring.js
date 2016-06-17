@@ -1,8 +1,10 @@
 import Template from 'template';
 import Bind from 'bind';
+import Event from 'stupid-event';
 
-function Reactive(_obj, _string){
+function ReactiveString(_obj, _string){
  	var self = {};
+ 	var event = Event();
  	var template = Template(_obj, _string);
  	var bindings = [];
  	for(let key in _obj){
@@ -12,19 +14,20 @@ function Reactive(_obj, _string){
  	}
 
  	function update(){
- 		console.log(template.render());
+ 		event.trigger('changed', template.render())
  	}
 
- 	function get(){
+ 	function tmpl(){
  		return template.render();
  	}
 
 	/*
 	* Public
 	*/
-	self.get = get;
-	
+	self.tmpl = tmpl;
+	self.on = event.on;
+
 	return self;
 }
 
-module.exports = Reactive;
+module.exports = ReactiveString;
