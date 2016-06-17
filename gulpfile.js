@@ -26,9 +26,9 @@ var git = 			require('git-rev');
  * --------------------------------------------------
  */
 var settings = {
-	build: './build',
-	source: './assets',
-	components: './includes/components'
+	build: 'build',
+	source: 'assets',
+	components: 'includes/components'
 };
 
 /*
